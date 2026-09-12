@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noxe</title>
+<meta name="description" content="Noxe — your taste, one place. Games, films, music, books and manga in one library.">
+<meta property="og:title" content="Noxe">
+<meta property="og:description" content="Your taste, one place. Games, films, music, books and manga in one library.">
+<meta name="theme-color" content="#070611">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070611'/%3E%3Cpath d='M18 46V18l28 28V18' fill='none' stroke='%23A05BFF' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root{--bg:#070611;--ink:#f3f1fa;--muted:#b9b4cc;--accent:#A05BFF;--line:#26223a}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:32px 20px}
+  .card{width:100%;max-width:400px;text-align:center}
+  .mark{font-size:44px;font-weight:800;letter-spacing:-1.5px;color:#fff;margin:0}
+  .mark span{color:var(--accent)}
+  .who{margin:26px 0 0;font-size:22px;font-weight:700;letter-spacing:-.3px}
+  .what{margin:8px 0 0;font-size:15px;color:var(--muted);line-height:1.5}
+  .btn{display:block;margin:28px auto 0;padding:15px 20px;border-radius:999px;font-weight:800;font-size:16px;text-decoration:none;color:#fff;background:var(--accent)}
+  .btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line);margin-top:12px}
+  .foot{margin-top:34px;font-size:12px;color:var(--muted)}
+  .foot a{color:var(--muted)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1 class="mark">N<span>o</span>xe</h1>
+  <p class="who" id="who">Your taste, one place.</p>
+  <p class="what" id="what">Games, films, music, books and manga in one library, on your profile.</p>
+  <a class="btn hidden" id="open" href="#">Open in Noxe</a>
+  <a class="btn" id="store" href="https://apps.apple.com/app/id6791178488">Get Noxe on the App Store</a>
+  <p class="foot"><a href="https://legal.noxeteam.com/#privacy">Privacy</a> · <a href="https://legal.noxeteam.com/#terms">Terms</a> · <a href="mailto:help@noxeteam.com">help@noxeteam.com</a></p>
+</main>
+<script>
+(function(){
+  var parts = location.pathname.split('/').filter(Boolean);
+  if (!parts.length) return;
+  var who = document.getElementById('who'), what = document.getElementById('what'), open = document.getElementById('open');
+  var scheme;
+  if (parts[0] === 'a' && parts[1]) {
+    who.textContent = 'An artwork on Noxe';
+    what.textContent = 'Open it in the app to see the rating, the notes and who else loves it.';
+    scheme = 'noxe://a/' + encodeURIComponent(parts[1]);
+  } else {
+    var h = decodeURIComponent(parts[0]).replace(/^@/, '');
+    if (!/^[A-Za-z0-9._]{2,30}$/.test(h)) return;
+    who.textContent = '@' + h + ' is on Noxe';
+    what.textContent = 'See their Top 3, their library and how much your taste matches.';
+    scheme = 'noxe://u/' + encodeURIComponent(h);
+    document.title = '@' + h + ' · Noxe';
+  }
+  open.href = scheme; open.classList.remove('hidden');
+  document.getElementById('store').classList.add('alt');
+})();
+</script>
+</body>
+</html>
